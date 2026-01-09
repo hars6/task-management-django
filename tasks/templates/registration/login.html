@@ -1,0 +1,122 @@
+{% extends 'tasks/base.html' %} {% block content %}
+<style>
+  /* Center the form container */
+  .auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  input:focus {
+    border-color: #3498db;
+    outline: none;
+  }
+
+  /* --- NEW CODE: Red Border on Error --- */
+  /* If the form has the class 'login-error', make inputs red */
+  form.login-error input[type="text"],
+  form.login-error input[type="password"] {
+    border: 1px solid red !important;
+    background-color: #fff8f8; /* Light red background */
+  }
+
+  .error-msg {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    background: #ffe6e6;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid red;
+  }
+  /* ------------------------------------- */
+
+  .btn-login {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .btn-login:hover {
+    background-color: #2980b9;
+  }
+</style>
+
+<div class="auth-container">
+  <h2>Login</h2>
+
+  {% if form.errors %}
+  <div class="error-msg">Invalid username or password. Please try again.</div>
+  {% endif %}
+
+  <form method="post" class="{% if form.errors %}login-error{% endif %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_username">Username:</label>
+      {{ form.username }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_password">Password:</label>
+      {{ form.password }}
+    </div>
+
+    <button type="submit" class="btn-login">Login</button>
+  </form>
+
+  <div
+    style="
+      margin-top: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    "
+  >
+    <a
+      href="{% url 'reset_password' %}"
+      style="color: #e74c3c; font-weight: bold"
+      >Forgot Password?</a
+    >
+  </div>
+</div>
+{% endblock %}
